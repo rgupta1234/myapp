@@ -1,7 +1,7 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: myapp
+  name: myapp2
 spec:
   runPolicy: Serial
   successfulBuildsHistoryLimit: 10
@@ -9,7 +9,7 @@ spec:
   source:
     type: Git
     git:
-      uri: https://github.com/<your-github-user>/myapp.git   # <-- change
+      uri: https://github.com/rgupta1234/myapp.git   # <-- change
       ref: main
     # contextDir: app            # uncomment if the Dockerfile is in a subfolder
     # sourceSecret:              # uncomment for a private repo
@@ -20,14 +20,14 @@ spec:
       dockerfilePath: Dockerfile
       from:                       # replaces the Dockerfile FROM -> base updates trigger builds
         kind: ImageStreamTag
-        name: hi-nodejs-base:latest
+        name: hi-node-base:latest
       buildArgs:
         - name: BUILD_MESSAGE
-          value: "Hello WM from Red Hat Hardened Images"
+          value: "Hello Sunday!!!! WM from Red Hat Hardened Images"
   output:
     to:
       kind: ImageStreamTag
-      name: myapp:latest
+      name: myapp2:latest
   triggers:
     - type: ConfigChange
     - type: ImageChange           # new hi-nodejs-base image -> rebuild
@@ -36,3 +36,4 @@ spec:
       github:
         secretReference:
           name: myapp-github-webhook
+
