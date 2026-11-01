@@ -1,0 +1,38 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: myapp
+spec:
+  runPolicy: Serial
+  successfulBuildsHistoryLimit: 10
+  failedBuildsHistoryLimit: 5
+  source:
+    type: Git
+    git:
+      uri: https://github.com/<your-github-user>/myapp.git   # <-- change
+      ref: main
+    # contextDir: app            # uncomment if the Dockerfile is in a subfolder
+    # sourceSecret:              # uncomment for a private repo
+    #   name: github-credentials
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+      from:                       # replaces the Dockerfile FROM -> base updates trigger builds
+        kind: ImageStreamTag
+        name: hi-nodejs-base:latest
+      buildArgs:
+        - name: BUILD_MESSAGE
+          value: "Hello WM from Red Hat Hardened Images"
+  output:
+    to:
+      kind: ImageStreamTag
+      name: myapp:latest
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange           # new hi-nodejs-base image -> rebuild
+      imageChange: {}
+    - type: GitHub                # git push -> rebuild
+      github:
+        secretReference:
+          name: myapp-github-webhook
