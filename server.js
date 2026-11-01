@@ -10,7 +10,7 @@ const pool = new Pool({
   database: process.env.PGDATABASE || process.env.DATABASE_NAME,
   max: 5,
 });
-const msg = process.env.BUILD_MESSAGE || "Hello";
+const msg = process.env.BUILD_MESSAGE || "Hola";
 const build = process.env.OPENSHIFT_BUILD_NAME || "local";
 const builtAt = fs.readFileSync("build-time.txt", "utf8").trim();
 const baseVersion = fs.existsSync("/etc/base-image-version")
