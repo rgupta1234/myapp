@@ -1,6 +1,6 @@
 # The BuildConfig's dockerStrategy.from replaces this FROM with hi-nodejs-base:latest.
 FROM quay.io/rgupta/hi-nodejs:latest
-ARG BUILD_MESSAGE="Hello from Red Hat Hardened Images"
+ARG BUILD_MESSAGE="Sunday Hello from Red Hat Hardened Images"
 ENV BUILD_MESSAGE=${BUILD_MESSAGE}
 
 USER 0
